@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@zag-js/solid": "^0.21.0",
-    "@zag-js/toggle": "^0.19.1",
+    "@zag-js/tabs": "^0.21.0",
     "solid-js": "^1.7.8"
   },
   "devDependencies": {
