@@ -1,36 +1,35 @@
-import * as tabs from "@zag-js/tabs"
+import * as fileUpload from "@zag-js/file-upload"
 import { normalizeProps, useMachine } from "@zag-js/solid"
-import { createMemo, createUniqueId, For } from "solid-js"
-
-const data = [
-  { value: "item-1", label: "Item one", content: "Item one content" },
-  { value: "item-2", label: "Item two", content: "Item two content" },
-  { value: "item-3", label: "Item three", content: "Item three content" },
-]
+import { createUniqueId, createMemo } from "solid-js"
 
 export default function App() {
-  const [state, send] = useMachine(tabs.machine({ id: createUniqueId(), value: "item-1" }))
+  const [state, send] = useMachine(
+    fileUpload.machine({
+      id: createUniqueId(),
+    }),
+  )
 
-  const api = createMemo(() => tabs.connect(state, send, normalizeProps))
+  const api = createMemo(() => fileUpload.connect(state, send, normalizeProps))
 
   return (
-    <div {...api().rootProps}>
-      <div {...api().tablistProps}>
-        <For each={data}>
-          {(item) => (
-            <button {...api().getTriggerProps({ value: item.value })}>
-              {item.label}
-            </button>
+    <div {...api.rootProps}>
+      <div {...api().dropzoneProps}>
+        <input {...api().hiddenInputProps} />
+        <span>Drag your file(s) here</span>
+      </div>
+
+      <button {...api().triggerProps}>Choose file(s)</button>
+
+      <ul>
+        <For each={api().files}>
+          {(file) => (
+            <li>
+              <div>{file.name}</div>
+              <button {...api().getDeleteTriggerProps({ file })}>Delete</button>
+            </li>
           )}
         </For>
-      </div>
-      <For each={data}>
-        {(item) => (
-          <div {...api().getContentProps({ value: item.value })}>
-            <p>{item.content}</p>
-          </div>
-        )}
-      </For>
+      </ul>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 {
-  "name": "vite-project",
+  "name": "vite-solid-project",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@zag-js/file-upload": "^0.21.0",
     "@zag-js/solid": "^0.21.0",
-    "@zag-js/tabs": "^0.21.0",
     "solid-js": "^1.7.8"
   },
   "devDependencies": {
